@@ -5,7 +5,7 @@ describe RspecPacmanFormatter do
     expect(RspecPacmanFormatter::VERSION).not_to be nil
   end
 
-  it 'does something useful' do
-    expect(false).to eq(true)
+  it 'loads the pacman class' do
+    expect(RspecPacmanFormatter::Pacman.name).to eq('RspecPacmanFormatter::Pacman')
   end
 end
