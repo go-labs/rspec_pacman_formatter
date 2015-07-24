@@ -28,6 +28,13 @@ Or, if you want to use RspecPacmanFormatter::Pacman as your default formatter, s
 --format RspecPacmanFormatter::Pacman
 ```
 
+## Sample Output
+
+    $ GAME STARTED
+    $ ..*.ᗣ.........ᗣ............ᗧ••••••••••
+    $ ...rspec results stuff here...
+    $ GAME OVER
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/go-labs/rspec_pacman_formatter.
