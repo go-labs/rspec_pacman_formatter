@@ -1,4 +1,5 @@
-# RspecPacmanFormatter
+RspecPacmanFormatter [![Gem Version](https://badge.fury.io/rb/rspec_pacman_formatter.png)](http://badge.fury.io/rb/rspec_pacman_formatter)
+=========
 
 PacMan style formatter for Rspec
 
