@@ -1,5 +1,6 @@
 require 'rspec'
 require 'rspec/core/formatters/base_text_formatter'
+require 'io/console'
 
 module RspecPacmanFormatter
   class Pacman < RSpec::Core::Formatters::BaseTextFormatter
@@ -14,11 +15,15 @@ module RspecPacmanFormatter
       super
       @progress_line = ''
       @failed = 0
+      @cols = 0
+      @notification = 0
     end
 
     def start(notification)
       puts 'GAME STARTED'
-      @progress_line = '•' * notification.count
+      @cols = Integer(`tput cols`)
+      @progress_line = '•' * @cols
+      @notification = notification.count
     end
 
     def example_started(_)
@@ -47,6 +52,10 @@ module RspecPacmanFormatter
     def step(character)
       @progress_line = @progress_line.sub(/ᗧ|•/, character)
       print format("%s\r", @progress_line)
+      if @progress_line[-1].eql?('.') || @progress_line[-1].eql?('ᗣ')
+        puts
+        @progress_line = '•' * @cols
+      end
     end
   end
 end
