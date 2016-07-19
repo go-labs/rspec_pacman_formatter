@@ -46,7 +46,7 @@ module RspecPacmanFormatter
       puts 'GAME OVER' if @failed > 0
     end
 
-    def init_line
+    def update_progress_line
       @progress_line = '•' * @cols
     end
 
