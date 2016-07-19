@@ -61,9 +61,6 @@ module RspecPacmanFormatter
 
     private
 
-    def test
-    end
-
     def step(character)
       @progress_line = @progress_line.sub(/ᗧ|•/, character)
       print format("%s\r", @progress_line)
