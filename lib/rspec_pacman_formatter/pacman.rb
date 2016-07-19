@@ -49,7 +49,7 @@ module RspecPacmanFormatter
 
     def update_progress_line
       if @notification > @cols
-        if ((@notification / @cols).eql?(@repetitions))
+        if (@notification / @cols).eql?(@repetitions)
           @progress_line = '•' * (@notification - (@cols * @repetitions))
           return
         end
