@@ -21,7 +21,7 @@ module RspecPacmanFormatter
     def start(notification)
       puts 'GAME STARTED'
       @cols = Integer(`tput cols`)
-      init_line
+      update_progress_line
       @notification = notification.count
     end
 
@@ -57,7 +57,7 @@ module RspecPacmanFormatter
       print format("%s\r", @progress_line)
       if @progress_line[-1] =~ /ᗣ|\./
         puts
-        init_line
+        update_progress_line
       end
     end
   end
