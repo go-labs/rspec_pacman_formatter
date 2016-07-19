@@ -16,13 +16,14 @@ module RspecPacmanFormatter
       @failed = 0
       @cols = 0
       @notification = 0
+      @repetitions = 0
     end
 
     def start(notification)
       puts 'GAME STARTED'
       @cols = Integer(`tput cols`)
-      update_progress_line
       @notification = notification.count
+      update_progress_line
     end
 
     def example_started(_)
@@ -47,15 +48,27 @@ module RspecPacmanFormatter
     end
 
     def update_progress_line
-      @progress_line = '•' * @cols
+      if @notification > @cols
+        if ((@notification / @cols).eql?(@repetitions))
+          @progress_line = '•' * (@notification - (@cols * @repetitions))
+          return
+        end
+        @progress_line = '•' * @cols
+        return
+      end
+      @progress_line = '•' * @notification
     end
 
     private
+
+    def test
+    end
 
     def step(character)
       @progress_line = @progress_line.sub(/ᗧ|•/, character)
       print format("%s\r", @progress_line)
       if @progress_line[-1] =~ /ᗣ|\./
+        @repetitions += 1
         puts
         update_progress_line
       end
