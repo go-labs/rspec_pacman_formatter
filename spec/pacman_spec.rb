@@ -22,7 +22,7 @@ describe RspecPacmanFormatter::Pacman do
 
     it 'sets the progress line' do
       pacman.start(start_notification)
-      expect(pacman.progress_line).to eq('••••••••••')
+      expect(pacman.progress_line).to eq(RspecPacmanFormatter::Characters::PACDOT * 10)
     end
   end
 
@@ -33,7 +33,7 @@ describe RspecPacmanFormatter::Pacman do
       pacman.progress_line
     end
     it 'adds the pacman character to the progress bar' do
-      expect(example_started).to eq('ᗧ•••••••••')
+      expect(example_started).to eq(RspecPacmanFormatter::Characters::PACMAN + RspecPacmanFormatter::Characters::PACDOT * 9)
     end
   end
 
@@ -45,7 +45,7 @@ describe RspecPacmanFormatter::Pacman do
       pacman.progress_line
     end
     it 'adds the passed characted to the progress bar' do
-      expect(example_passed).to eq('.•••••••••')
+      expect(example_passed).to eq('.' + RspecPacmanFormatter::Characters::PACDOT * 9)
     end
   end
 
@@ -57,7 +57,8 @@ describe RspecPacmanFormatter::Pacman do
       pacman.progress_line
     end
     it 'adds the passed characted to the progress bar' do
-      expect(example_failed).to eq('ᗣ•••••••••')
+      expect(RspecPacmanFormatter::Characters).to receive(:random_ghost).and_call_original
+      expect(example_failed).to match(/#{Regexp.quote(RspecPacmanFormatter::Characters::PACDOT * 9)}/)
     end
   end
 
@@ -69,7 +70,7 @@ describe RspecPacmanFormatter::Pacman do
       pacman.progress_line
     end
     it 'adds the passed characted to the progress bar' do
-      expect(example_pending).to eq('*•••••••••')
+      expect(example_pending).to eq('*' + RspecPacmanFormatter::Characters::PACDOT * 9)
     end
   end
 
