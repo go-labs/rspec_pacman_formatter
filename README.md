@@ -31,10 +31,7 @@ Or, if you want to use RspecPacmanFormatter::Pacman as your default formatter, s
 
 ## Sample Output
 
-    $ GAME STARTED
-    $ ..*.ᗣ.........ᗣ............ᗧ••••••••••
-    $ ...rspec results stuff here...
-    $ GAME OVER
+![animated](https://user-images.githubusercontent.com/4663192/37238259-270b87b4-23e8-11e8-92eb-cfedb6cab3f1.gif)
 
 ## Contributing
 

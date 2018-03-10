@@ -27,7 +27,7 @@ module RspecPacmanFormatter
     end
 
     def example_started(_)
-      step('ᗧ')
+      step(Characters::PACMAN)
     end
 
     def example_passed(_)
@@ -36,7 +36,7 @@ module RspecPacmanFormatter
 
     def example_failed(_)
       @failed += 1
-      step('ᗣ')
+      step(Characters.random_ghost)
     end
 
     def example_pending(_)
@@ -44,25 +44,25 @@ module RspecPacmanFormatter
     end
 
     def close(_)
-      puts 'GAME OVER' if @failed > 0
+      puts 'GAME OVER'.red if @failed > 0
     end
 
     def update_progress_line
       if @notification > @cols
         if (@notification / @cols).eql?(@repetitions)
-          @progress_line = '•' * (@notification - (@cols * @repetitions))
+          @progress_line = Characters::PACDOT * (@notification - (@cols * @repetitions))
           return
         end
-        @progress_line = '•' * @cols
+        @progress_line = Characters::PACDOT * @cols
         return
       end
-      @progress_line = '•' * @notification
+      @progress_line = Characters::PACDOT * @notification
     end
 
     private
 
     def step(character)
-      @progress_line = @progress_line.sub(/ᗧ|•/, character)
+      @progress_line = @progress_line.sub(/#{Regexp.quote(Characters::PACMAN)}|#{Regexp.quote(Characters::PACDOT)}/, character)
       print format("%s\r", @progress_line)
       if @progress_line[-1] =~ /ᗣ|\./
         @repetitions += 1
