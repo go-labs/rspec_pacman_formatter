@@ -21,9 +21,15 @@ module RspecPacmanFormatter
 
     def start(notification)
       puts 'GAME STARTED'
-      @cols = Integer(`tput cols`)
+      @cols = terminal_width
       @notification = notification.count
       update_progress_line
+    end
+
+    def terminal_width
+      `tput cols`.chomp.to_i
+      rescue StandardError
+        CI_TERMINAL_WIDTH
     end
 
     def example_started(_)
