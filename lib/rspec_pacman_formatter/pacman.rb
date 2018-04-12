@@ -3,33 +3,32 @@ require 'rspec/core/formatters/base_text_formatter'
 
 module RspecPacmanFormatter
   class Pacman < RSpec::Core::Formatters::BaseTextFormatter
-    RSpec::Core::Formatters.register(
-      self, :start, :close, :example_started,
-      :example_passed, :example_failed, :example_pending
-    )
+    CI_TERMINAL_WIDTH = 80
+    RSpec::Core::Formatters.register(self, :start, :close, :example_started,
+                                     :example_passed, :example_failed,
+                                     :example_pending)
 
     attr_accessor :progress_line, :failed
 
     def initialize(*args)
       super
       @progress_line = ''
-      @failed = 0
-      @cols = 0
-      @notification = 0
-      @repetitions = 0
+      @failed        = 0
+      @notification  = 0
+      @repetitions   = 0
+    end
+
+    def cols
+      @cols ||= begin
+        width = `tput cols`.chomp.to_i
+        width.nil? || width.zero? ? CI_TERMINAL_WIDTH : width
+      end
     end
 
     def start(notification)
       puts 'GAME STARTED'
-      @cols = terminal_width
       @notification = notification.count
       update_progress_line
-    end
-
-    def terminal_width
-      `tput cols`.chomp.to_i
-      rescue StandardError
-        CI_TERMINAL_WIDTH
     end
 
     def example_started(_)
@@ -54,12 +53,12 @@ module RspecPacmanFormatter
     end
 
     def update_progress_line
-      if @notification > @cols
-        if (@notification / @cols).eql?(@repetitions)
-          @progress_line = Characters::PACDOT * (@notification - (@cols * @repetitions))
+      if @notification > cols
+        if (@notification / cols).eql?(@repetitions)
+          @progress_line = Characters::PACDOT * (@notification - (cols * @repetitions))
           return
         end
-        @progress_line = Characters::PACDOT * @cols
+        @progress_line = Characters::PACDOT * cols
         return
       end
       @progress_line = Characters::PACDOT * @notification
@@ -70,11 +69,10 @@ module RspecPacmanFormatter
     def step(character)
       @progress_line = @progress_line.sub(/#{Regexp.quote(Characters::PACMAN)}|#{Regexp.quote(Characters::PACDOT)}/, character)
       print format("%s\r", @progress_line)
-      if @progress_line[-1] =~ /ᗣ|\./
-        @repetitions += 1
-        puts
-        update_progress_line
-      end
+      return unless @progress_line[-1] =~ /ᗣ|\./
+      @repetitions += 1
+      puts
+      update_progress_line
     end
   end
 end
