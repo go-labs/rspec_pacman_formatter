@@ -68,7 +68,7 @@ module RspecPacmanFormatter
 
     def step(character)
       @progress_line = @progress_line.sub(/#{Regexp.quote(Characters::PACMAN)}|#{Regexp.quote(Characters::PACDOT)}/, character)
-      print format("%s\r", @progress_line)
+      print "#{@progress_line}\r"
       return unless @progress_line[-1] =~ /ᗣ|\./
       @repetitions += 1
       puts
