@@ -31,7 +31,7 @@ Or, if you want to use RspecPacmanFormatter::Pacman as your default formatter, s
 
 ## Sample Output
 
-![render1537591709466-min](https://user-images.githubusercontent.com/4663192/45913634-52e14e00-bdf3-11e8-9540-f1e291cbf72a.gif)
+![render1537594312098-min](https://user-images.githubusercontent.com/4663192/45913957-8b385a80-bdfa-11e8-8946-2a4e7c7f055e.gif)
 
 ## Contributing
 
