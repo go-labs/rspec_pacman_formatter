@@ -53,18 +53,17 @@ module RspecPacmanFormatter
     end
 
     def update_progress_line
-      if @notification > cols
-        if (@notification / cols).eql?(@repetitions)
-          @progress_line = Characters::PACDOT * (@notification - (cols * @repetitions))
-          return
-        end
-        @progress_line = Characters::PACDOT * cols
-        return
-      end
-      @progress_line = Characters::PACDOT * @notification
+      return pacdots(@notification) unless @notification > cols
+      return pacdots(cols) unless (@notification / cols).eql?(@repetitions)
+
+      pacdots((@notification - (cols * @repetitions)))
     end
 
     private
+
+    def pacdots(number)
+      @progress_line = Characters::PACDOT * number
+    end
 
     def step(character)
       @progress_line = @progress_line.sub(/#{Regexp.quote(Characters::PACMAN)}|#{Regexp.quote(Characters::PACDOT)}/, character)
